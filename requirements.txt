@@ -1,3 +1,1 @@
-flask
-redis
-boto3
+-r ./url_shortener/requirements.txt

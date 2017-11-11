@@ -11,6 +11,6 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r ./requirements.txt
 
 COPY run.py .
-COPY url_shortener url_shortener
+COPY . url_shortener
 
 CMD ["python", "run.py"]
