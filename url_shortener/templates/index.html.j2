@@ -1,0 +1,23 @@
+{% extends 'layout.html.j2' %}
+  {% block back %}
+  {% endblock %}
+{% block title %}
+Url shortener
+{% endblock %}
+
+{% block header %}
+<h1 class="title-index">Now it is time to shorten your url!</h1>
+<hr class="separator"/>
+<br />
+{% endblock %}
+
+{% block body %}
+<h2 class="subtitle-index">Please enter your url to shorten</h2>
+<br />
+<form action="{{ api_url }}" method="post">
+  <input class="form-control" name="url_long" type="text"/>
+  <a class="btn btn-block btn-lg btn-default btn-blue" >Shorten url</a>
+</form>
+</br>
+
+{% endblock %}

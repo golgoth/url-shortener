@@ -1,0 +1,8 @@
+version: '3'
+services:
+  webserver:
+    build: .
+    ports:
+     - "8000:8000"
+  redis_cache:
+    image: "redis:alpine"
