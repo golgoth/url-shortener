@@ -3,16 +3,8 @@ import boto3
 
 class DB:
     def __init__(self, endpoint_url, name_url_table):
-        self.client = boto3.client('dynamodb',
-                                   endpoint_url=endpoint_url,
-                                   region_name='eu-west-1',
-                                   aws_access_key_id='anything',
-                                   aws_secret_access_key='anything')
-        self.resource = boto3.resource('dynamodb',
-                                       endpoint_url=endpoint_url,
-                                       region_name='eu-west-1',
-                                       aws_access_key_id='anything',
-                                       aws_secret_access_key='anything')
+        self.client = boto3.client('dynamodb')
+        self.resource = boto3.resource('dynamodb')
         self.name_url_table = name_url_table
 
     def init_db(self):
