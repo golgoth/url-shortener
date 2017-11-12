@@ -5,3 +5,5 @@ flake8>3.0.4
 tox==2.3.1
 mypy
 pylint==1.7.4
+Flask-Testing>0.4
+requests

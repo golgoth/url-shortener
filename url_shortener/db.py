@@ -1,11 +1,24 @@
 import boto3
+import os
 
 
 class DB:
-    def __init__(self, endpoint_url, name_url_table):
-        self.client = boto3.client('dynamodb')
-        self.resource = boto3.resource('dynamodb')
-        self.name_url_table = name_url_table
+    def __init__(self, name_url_table):
+        endpoint_url = os.environ.get('DYNAMODB_ENDPOINT')
+        env = os.environ.get('ENV')
+        aws_access_key = os.environ.get('AWS_ACCESS_KEY')
+        aws_secret_key = os.environ.get('AWS_ACCESS_SECRET')
+        self.client = boto3.client('dynamodb',
+                                   endpoint_url=endpoint_url,
+                                   region_name='eu-west-1',
+                                   aws_access_key_id=aws_access_key,
+                                   aws_secret_access_key=aws_secret_key)
+        self.resource = boto3.resource('dynamodb',
+                                       endpoint_url=endpoint_url,
+                                       region_name='eu-west-1',
+                                       aws_access_key_id=aws_access_key,
+                                       aws_secret_access_key=aws_secret_key)
+        self.name_url_table = f'{name_url_table}-{env}'
 
     def init_db(self):
         self._create_table_if_not_exist()
