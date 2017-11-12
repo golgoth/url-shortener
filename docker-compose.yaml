@@ -1,12 +1,12 @@
 version: '3'
 services:
-  webserver:
+  url_shortener:
     build: ./url_shortener
     ports:
      - "5000:5000"
+    environment:
+      ENV: 'test'
+    links:
+     - redis_cache
   redis_cache:
     image: "redis:alpine"
-  dynamodb:
-    build: ./dynamodb
-    ports:
-     - "8000:8000"

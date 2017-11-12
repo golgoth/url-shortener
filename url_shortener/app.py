@@ -9,9 +9,12 @@ app = Flask(__name__)
 @app.before_request
 def init_db():
     if not hasattr(flask.g, 'database'):
-        flask.g.database = DB(endpoint_url='http://dynamodb:8000', name_url_table='urls')
-        app.logger.info('Creating database connection')
-        flask.g.database.init_db()
+        try:
+            flask.g.database = DB(name_url_table='urls')
+            app.logger.info('Creating database connection')
+            flask.g.database.init_db()
+        except Exception as e:
+            app.logger.error('Failling creating table', e)
 
 
 @app.route('/')

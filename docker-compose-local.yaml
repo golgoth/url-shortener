@@ -1,0 +1,18 @@
+version: '3'
+services:
+  url_shortener:
+    build: ./url_shortener
+    links:
+     - redis_cache
+     - dynamodb
+    environment:
+      DYNAMODB_ENDPOINT: 'http://dynamodb:8000'
+      AWS_ACCESS_KEY: 'dummy'
+      AWS_ACCESS_SECRET: 'dummy'
+      ENV: 'test'
+    ports:
+      - "5000:5000"
+  redis_cache:
+    image: "redis:alpine"
+  dynamodb:
+    build: ./dynamodb
