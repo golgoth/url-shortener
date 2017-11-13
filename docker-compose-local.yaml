@@ -14,5 +14,7 @@ services:
       - "5000:5000"
   redis_cache:
     image: "redis:alpine"
+    volumes:
+     - ./redis-local.conf:/usr/local/etc/redis/redis.conf
   dynamodb:
     build: ./dynamodb
