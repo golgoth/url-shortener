@@ -1,6 +1,6 @@
 import boto3
 import os
-
+from redis import Redis
 
 class DB:
     def __init__(self, name_url_table):
@@ -19,9 +19,12 @@ class DB:
                                        aws_access_key_id=aws_access_key,
                                        aws_secret_access_key=aws_secret_key)
         self.name_url_table = f'{name_url_table}-{env}'
+        self.redis = None
 
     def init_db(self):
         self._create_table_if_not_exist()
+        self.redis = Redis(host='redis_cache', port=6379)
+
 
     def _create_table_if_not_exist(self):
         if self.name_url_table not in self.client.list_tables()['TableNames']:
@@ -55,8 +58,12 @@ class DB:
                     'long_url': long_url,
                 }
             )
+        self.redis.set(short_url, long_url)
 
     def get_long_url(self, short_url: str):
+        redis_url = self.redis.get(short_url)
+        if redis_url is not None:
+            return str(redis_url, 'utf-8')
         url_table = self.resource.Table(self.name_url_table)
         row = url_table.get_item(
             Key={

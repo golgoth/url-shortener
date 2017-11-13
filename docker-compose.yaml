@@ -10,3 +10,5 @@ services:
      - redis_cache
   redis_cache:
     image: "redis:alpine"
+    volumes:
+     - ./redis.conf:/usr/local/etc/redis/redis.conf
