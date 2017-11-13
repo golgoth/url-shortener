@@ -3,7 +3,6 @@ BASE_62 = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 # (bad words or complex 0Oi1l -type strings)
 
 
-
 def base_encoding(to_encode: int, base=BASE_62, length_base=len(BASE_62)):
     """
     :param to_encode: int in base 10 to Encode

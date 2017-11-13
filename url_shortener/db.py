@@ -2,6 +2,7 @@ import boto3
 import os
 from redis import Redis
 
+
 class DB:
     def __init__(self, name_url_table):
         endpoint_url = os.environ.get('DYNAMODB_ENDPOINT')
@@ -24,7 +25,6 @@ class DB:
     def init_db(self):
         self._create_table_if_not_exist()
         self.redis = Redis(host='redis_cache', port=6379)
-
 
     def _create_table_if_not_exist(self):
         if self.name_url_table not in self.client.list_tables()['TableNames']:

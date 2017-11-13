@@ -17,3 +17,8 @@ assert URL_SHORT in str(should_contain_short_url.content), f'{should_contain_sho
 should_redirect_correctly = requests.get(f'http://url_shortener:5000/{URL_SHORT}')
 assert str(should_redirect_correctly.url) == URL_LONG, f'{should_redirect_correctly.url} != {URL_LONG}'
 exit(0)
+
+# We ensure redis config is created with allkeys-lru policy
+from redis import Redis
+redis = Redis(host='redis_cache', port=6379)
+assert redis.config_get('maxmemory-policy ') == 'allkeys-lru'

@@ -12,9 +12,12 @@ services:
       ENV: 'test'
   redis_cache:
     image: "redis:alpine"
+    volumes:
+     - ./redis-local.conf:/usr/local/etc/redis/redis.conf
   dynamodb:
     build: ./dynamodb
   integration_test:
     build: ./integration_test
     links:
      - url_shortener
+     - redis_cache
