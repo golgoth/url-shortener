@@ -18,6 +18,7 @@ def init_db():
 
 
 @app.route('/')
+@app.route('/api/shorten', methods=['GET', ])
 def index():
     return render_template('index.html.j2', api_url=url_for('shorten_url'))
 
