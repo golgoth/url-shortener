@@ -2,26 +2,34 @@
   {% block back %}
   {% endblock %}
 {% block title %}
-Url shortener
+Short10
 {% endblock %}
 
 {% block header %}
-<h1 class="title-index">Now it is time to shorten your url!</h1>
+<h1 class="title-index">Welcome to Short10!</h1>
 <hr class="separator"/>
 <br />
 {% endblock %}
 
 {% block body %}
-<h2 class="subtitle-index">Please enter your url to shorten</h2>
+<h2 class="subtitle-index">Please enter the url to shorten:</h2>
 <br />
-<form action="{{ api_url }}" method="post">
-  <input class="form-control" name="url_long" type="text" required/>
+<form action="{{ api_url }}" method="post" onsubmit="return checkvalue(this)">
+  <input class="form-control" name="url_long" type="text" id="urlLong" required/>
   <button class="btn btn-block btn-lg btn-default btn-blue" >Shorten url</button>
 </form>
-</br>
+<br />
 
 {% if short_url %}
-<h2 class="subtitle-index">Here is your short url => {{ short_url }}</h2>
+  <p class="text-centered">
+    <b>Here is your short url: </b>
+    <a class="subtitle-index" href="{{ short_url }}" id="shortUrl">{{ short_url }}</a>
+    &nbsp;
+    <button class="btn btn-primary" onclick="copyToClipboard('#shortUrl')"> Copy </button>
+  </p>
 {% endif %}
 
+{% endblock %}
+{% block scripts %}
+<script src="/static/js/index.js"></script>
 {% endblock %}
