@@ -21,7 +21,13 @@ Url shortener
 </br>
 
 {% if short_url %}
-<h2 class="subtitle-index">Here is your short url => {{ short_url }}</h2>
+
+<href class="subtitle-index">Here is your short url </h2>
+<a href="{{ short_url }}" id="shortUrl">{{ short_url }}</a>
+<button class="btn btn-primary" onclick="copyToClipboard()">Copy to clipboard</button>
 {% endif %}
 
+{% endblock %}
+{% block scripts %}
+<script src="/static/js/index.js"></script>
 {% endblock %}

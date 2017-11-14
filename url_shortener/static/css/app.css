@@ -1,0 +1,35 @@
+body {
+    font-family: "Helvetica Neue", "Calibri Light", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: 0.02em;
+}
+
+.btn-blue {
+	background-color: #1ba0e3;
+	color: #fff;
+  font-weight: bold;
+  text-align: center
+}
+
+.btn-orange {
+	background-color: #f27611;
+	color: #fff;
+  font-weight: bold;
+  text-align: center
+}
+
+.title-index {
+  font-weight: bold;
+  text-align: center;
+}
+.subtitle-index{
+  text-align: center;
+}
+
+body {
+  background: #ebeef0
+}
+.separator{
+  border-top: 1px solid #1682B9;
+}
