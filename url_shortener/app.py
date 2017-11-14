@@ -43,4 +43,4 @@ def shorten_url():
         return render_template('index.html.j2')
 
     short_url = request.headers['host'] + f'/{short_url}'
-    return f"Your short URL for {long_url_to_shorten} is {short_url}.\n"
+    return render_template('index.html.j2', api_url=url_for('shorten_url'), short_url=short_url)

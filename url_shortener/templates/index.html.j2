@@ -15,9 +15,13 @@ Url shortener
 <h2 class="subtitle-index">Please enter your url to shorten</h2>
 <br />
 <form action="{{ api_url }}" method="post">
-  <input class="form-control" name="url_long" type="text"/>
-  <button class="btn btn-block btn-lg btn-default btn-blue" >Shorten url</a>
+  <input class="form-control" name="url_long" type="text" required/>
+  <button class="btn btn-block btn-lg btn-default btn-blue" >Shorten url</button>
 </form>
 </br>
+
+{% if short_url %}
+<h2 class="subtitle-index">Here is your short url => {{ short_url }}</h2>
+{% endif %}
 
 {% endblock %}

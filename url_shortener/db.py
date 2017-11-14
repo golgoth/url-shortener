@@ -61,14 +61,23 @@ class DB:
         self.redis.set(short_url, long_url)
 
     def get_long_url(self, short_url: str):
+        """
+        Retrieve the long url given a short url, first looking in the cache,
+        then in the db. If an entry is retrived in the db, the cache is updated.
+        """
         redis_url = self.redis.get(short_url)
         if redis_url is not None:
             return str(redis_url, 'utf-8')
         url_table = self.resource.Table(self.name_url_table)
-        row = url_table.get_item(
+        value = url_table.get_item(
             Key={
                  'short_url': short_url
             }
         )
-        item = row.get('Item')
-        return None if item is None else item.get('long_url')
+        item = value.get('Item')
+        if item is None:
+            return None
+        else:
+            long_url = item.get('long_url')
+            self.redis.set(short_url, long_url)
+            return long_url
