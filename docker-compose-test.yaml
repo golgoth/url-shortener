@@ -10,6 +10,7 @@ services:
       AWS_ACCESS_KEY: 'dummy'
       AWS_ACCESS_SECRET: 'dummy'
       ENV: 'test'
+      HOST_REDIS: 'redis_cache'
   redis_cache:
     image: "redis:alpine"
     volumes:

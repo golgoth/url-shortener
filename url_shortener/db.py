@@ -24,7 +24,8 @@ class DB:
 
     def init_db(self):
         self._create_table_if_not_exist()
-        self.redis = Redis(host='redis_cache', port=6379)
+        redis_host = os.environ.get('HOST_REDIS')
+        self.redis = Redis(host=redis_host if redis_host is not None else '0.0.0.0', port=6379)
 
     def _create_table_if_not_exist(self):
         if self.name_url_table not in self.client.list_tables()['TableNames']:

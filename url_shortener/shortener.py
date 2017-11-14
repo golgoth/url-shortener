@@ -45,6 +45,7 @@ def shorten_and_handle_url(url_long, db):
     :param str url_long: the url to shorten
     :param DB db: the database object used for inserting and getting value to/from storage
     """
+    # TODO: batch get items for better performances
     sanitized_url_to_shorten = sanitize_url(url_long)
     hashed_url = hash_url(sanitized_url_to_shorten)
     url_long_existing = None
