@@ -4,7 +4,7 @@
 
 ## Access to the service:
 
-Go to http://www.arrivendel.com/ and enjoy!
+Go to http://arrivendel.com and enjoy!
 
 ## Description:
 Short10 is an url shortener (yes, probably the 10000th one).
@@ -46,6 +46,11 @@ The AWS architecture is built using terraform (cf https://github.com/golgoth/aws
 I also created some kubernetes config, in this repo, since I planned to first use kubernetes to orchestrate the containers, struggling with associating my domain name with the kubernetes cluster, I decided to go for ECS instead.
 
 ## Development:
+Project structure:
+- `./dynamodb`: used for having a local test instance of dynamodb
+- `./redis`: used for building a redis image with the correct configs (lru eviction rule)
+- `./url_shortener`: app code for the url shortener service
+
 To ensure good CI/CD levels, I created a jenkins server hosted on EC2, linked to github, running unit tests (tox/flake8) automatically every time the master branch of this project is changing.
 
 Docker cloud is also plugged in with github to build the image of the service and have it available on the repository `golgothlt/url_shortener`. This is this image that is used when deploying on ECS from terraform.
