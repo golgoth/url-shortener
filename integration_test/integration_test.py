@@ -41,4 +41,15 @@ assert str(should_redirect_correctly.url) == URL_LONG, f'{should_redirect_correc
 exit(0)
 
 # We ensure redis config is created with allkeys-lru policy
-assert redis.config_get('maxmemory-policy ') == 'allkeys-lru'
+redis_mem_policy = redis.config_get('maxmemory-policy')
+assert redis_mem_policy == {'maxmemory-policy': 'allkeys-lru'}, f'redis mem policy is {redis_mem_policy}'
+
+# Empty urls should be handled by server
+form_payload = {'url_long': URL_LONG}
+should_contain_short_url = requests.post('http://url_shortener:5000/api/shorten',
+                        data=form_payload)
+
+
+
+
+exit(0)
