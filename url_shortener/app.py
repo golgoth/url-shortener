@@ -9,6 +9,7 @@ from urllib.parse import urlparse
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
+
 @app.before_request
 def init_db():
     if not hasattr(flask.g, 'database'):
@@ -30,7 +31,7 @@ def index():
 def redirect_short_url(url_short):
     long_url = flask.g.database.get_long_url(url_short)
     # for urls without the http:// part, we add it, if the domain requires https it should redirect
-    long_url = f'http://{long_url}' if urlparse(long_url).netloc =='' else long_url
+    long_url = f'http://{long_url}' if urlparse(long_url).netloc == '' else long_url
     app.logger.info(f'Redirecting to {long_url}')
     if (long_url is None):
         flash('This url was not registered')
