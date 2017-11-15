@@ -28,8 +28,9 @@ class DB:
         redis_host = os.environ.get('HOST_REDIS')
         redis_type = os.environ.get('REDIS_TYPE')
         if redis_type == 'CLUSTER':
-            startup_nodes = [{"host": redis_host, "port": "6379"}]
-            self.redis = StrictRedisCluster(startup_nodes=startup_nodes, decode_responses=False)
+            # startup_nodes = [{"host": redis_host, "port": "6379"}]
+            # self.redis = StrictRedisCluster(startup_nodes=startup_nodes, decode_responses=False)
+            self.redis = Redis(host=redis_host if redis_host is not None else '0.0.0.0', port=6379)
         else:
             self.redis = Redis(host=redis_host if redis_host is not None else '0.0.0.0', port=6379)
 
