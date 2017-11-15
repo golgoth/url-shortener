@@ -17,3 +17,12 @@ def base_encoding(to_encode: int, base=BASE_62, length_base=len(BASE_62)):
 def sanitize_url(long_url):
     # TODO
     return long_url
+
+def is_url_valid(long_url):
+    illegal_char = [' ', '<', '>', '!', '']
+    if long_url.strip == "":
+        return False
+    if ' ' in long_url:
+        return False
+    else:
+        return True

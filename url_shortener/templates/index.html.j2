@@ -23,7 +23,7 @@ Short10
 {% if short_url %}
   <p class="text-centered">
     <b>Here is your short url: </b>
-    <a class="subtitle-index" href="{{ short_url }}" id="shortUrl">{{ short_url }}</a>
+    <a class="subtitle-index" href="http://{{ short_url }}" id="shortUrl">{{ short_url }}</a>
     &nbsp;
     <button class="btn btn-primary" onclick="copyToClipboard('#shortUrl')"> Copy </button>
   </p>
