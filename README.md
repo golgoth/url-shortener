@@ -15,7 +15,7 @@ Inputing `https://www.youtube.com/watch?v=B_2asRONZBM` will return `example.com/
 `2XYJ8Fl` is the shortened URL computed by the service.
 Inputing several time the same URL will return the same short URL. The short url will always be redirecting to the same page, as long as the service lives.
 
-Not that it is up to the user to provide a correct url. While some characters are prevented in the input, a lot of strings can be shorten, the redirection will just behave as if the user input the bad url from the start in his browser.
+Note that it is up to the user to provide a correct url. While some characters could be prevented in the input, a lot of strings can be shorten, the redirection will just behave as if the user input the bad url from the start in his browser. I decided not to prevent any characters for now, nor to apply any regex to check the url validity.
 
 
 ## How is the short URL computed?
@@ -26,9 +26,9 @@ Two main options were possible:
 I choose the first option, as I didn't want to depend on a database counter.
 The integer of the md5 hexdigest of the url is converted into a base 62 string (string composed of a mix of those values: `0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ`).
 
-The first 7 characters are selected and used as the short url. This comes with a drawback: hash are subject to collisions, and I have the birthday paradox telling us that keys will collide, quite fast.
+The first 7 characters are selected and used as the short url. This comes with a drawback: hashes are subject to collisions, and there is the birthday paradox telling us that keys will collide, quite fast.
 
-To handle collision, I try to add characters to the short key from the original url hashed string, but to keep it short, I divide the integer of the hexdigest by 2 up to 100 times before giving up. Those cases should be rare, so if it would indeed affect performances, it would not do it often.
+To handle collision, I first try to add additional characters to the short key from the original url hashed string, but I ened it to remain short short. I divide the integer of the hexdigest by 2 up to 100 times before giving up. Those cases should be rare, so if it would indeed affect performances, it would not do it often.
 
 ## Architecture
 To ensure scalability and high availability, I decided to build the app in a stateless way at the server, talking to the database to store and read records. The shorten_url is a service that is shipped on a container, deployed on a AWS ECS auto scaling group, interfaced to the world with an application load balancer, and using DynamoDB as its key-value database.
@@ -37,7 +37,7 @@ The choice of DynamoDB is coming from the database strength when it comes to sca
 To help with scalability and lower the costs of DynamoDB, and make the calls faster, a redis cache is introduced as a first storage layer for the service.
 
 Note:
-- If Java was choosen for developing the application, DAX, the dynamodb cache system could have been used easily to provide this cache layer. But DAX is not supported by boto3 yet (to my knowledge).
+- If Java was chosen for developing the application, DAX, the dynamodb cache system could have been used easily to provide this cache layer. But DAX is not supported by boto3 yet (to my knowledge).
 
 The goal in our architecture is to have this redis cache sharded on a cluster through AWS elasticache. For the local testing and prod until elastic cache is fully operational with our service, a redis cache is deployed in the same service than the url shortener to handle cache locally (The interest is limited in case it scales to many hosts, as the cache is not global to many containers, though it is still a good start).
 
