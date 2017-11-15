@@ -1,6 +1,7 @@
 import boto3
 import os
 from redis import Redis
+from rediscluster import StrictRedisCluster
 
 
 class DB:
@@ -25,8 +26,13 @@ class DB:
     def init_db(self):
         self._create_table_if_not_exist()
         redis_host = os.environ.get('HOST_REDIS')
-        self.redis = Redis(host=redis_host if redis_host is not None else '0.0.0.0', port=6379)
-        
+        redis_type = os.environ.get('REDIS_TYPE')
+        if redis_type == 'CLUSTER':
+            startup_nodes = [{"host": redis_host, "port": "6379"}]
+            self.redis = StrictRedisCluster(startup_nodes=startup_nodes, decode_responses=False)
+        else:
+            self.redis = Redis(host=redis_host if redis_host is not None else '0.0.0.0', port=6379)
+
     def _create_table_if_not_exist(self):
         if self.name_url_table not in self.client.list_tables()['TableNames']:
             url_table = self.resource.create_table(
