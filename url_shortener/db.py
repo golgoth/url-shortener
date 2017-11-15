@@ -1,7 +1,7 @@
 import boto3
 import os
 from redis import Redis
-from rediscluster import StrictRedisCluster
+# from rediscluster import StrictRedisCluster
 
 
 class DB:
