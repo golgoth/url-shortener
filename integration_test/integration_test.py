@@ -38,7 +38,27 @@ assert value.get('Item').get('long_url') == URL_LONG
 # Now test the redirection to the LONG URL when going to the short url
 should_redirect_correctly = requests.get(f'http://url_shortener:5000/{URL_SHORT}')
 assert str(should_redirect_correctly.url) == URL_LONG, f'{should_redirect_correctly.url} != {URL_LONG}'
-exit(0)
+
+# Should handle wwww. or dummy.com urls
+URL_LONG_NO_HTTP = 'www.ea.com/'
+URL_SHORT_NO_HTTP = '3KXb5cM'
+form_payload_no_http = {'url_long': URL_LONG_NO_HTTP}
+r = requests.post('http://url_shortener:5000/api/shorten',
+                        data=form_payload_no_http)
+should_redirect_correctly_no_http = requests.get(f'http://url_shortener:5000/{URL_SHORT_NO_HTTP}')
+assert str(should_redirect_correctly_no_http.url) == f'https://{URL_LONG_NO_HTTP}', f'{should_redirect_correctly_no_http.url} != https://{URL_LONG_NO_HTTP}'
+
 
 # We ensure redis config is created with allkeys-lru policy
-assert redis.config_get('maxmemory-policy ') == 'allkeys-lru'
+redis_mem_policy = redis.config_get('maxmemory-policy')
+assert redis_mem_policy == {'maxmemory-policy': 'allkeys-lru'}, f'redis mem policy is {redis_mem_policy}'
+
+# Empty urls should be handled by server
+form_payload = {'url_long': URL_LONG}
+should_contain_short_url = requests.post('http://url_shortener:5000/api/shorten',
+                        data=form_payload)
+
+
+
+
+exit(0)

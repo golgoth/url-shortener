@@ -1,3 +1,4 @@
 flask
 redis
 boto3
+redis-py-cluster
